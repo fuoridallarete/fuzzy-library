@@ -1,0 +1,36 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <h1 class="text-center my-3">Local Library Books List</h1>
+    {% if books_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for book in books_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>
+                            <a
+                              class="btn btn-primary btn-block" type="submit"
+                              href="{{ book.get_absolute_url }}"
+                            >
+                              Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="text-center mt-5">No books available in the library</h4>
+    {% endif %}
+{% endblock %}

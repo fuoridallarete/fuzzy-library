@@ -1,2 +1,2 @@
 # fuzzy-library
-Library Management system to practice Django
+A library system management project to practice Django

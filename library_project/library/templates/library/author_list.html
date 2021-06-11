@@ -1,0 +1,38 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <h1 class="text-center my-3">Local Library Authors List</h1>
+    {% if authors_list %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Died</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for author in authors_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ author.last_name }}, {{ author.first_name }}</td>
+                        <td>{{ author.date_of_birth }}</td>
+                        <td>{{ author.date_of_death|default_if_none:"-" }}</td>
+                        <td>
+                            <a
+                              class="btn btn-primary btn-block" type="submit"
+                              href="{{ author.get_absolute_url }}"
+                            >
+                              Details
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4 class="text-center mt-5">No authors available in the library</h4>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col text-center mt-3">
+            <p>You've been successfully logged out from your Local Library.</p>
+            <a href="{% url 'login'%}">Click here to login again.</a>
+        </div>
+    </div>
+{% endblock %}

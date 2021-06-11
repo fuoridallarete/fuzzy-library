@@ -1,0 +1,46 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card">
+            <div class="card-header">
+                <h4 class="card-title my-2">{{ book.title }}</h4>
+            </div>
+                {% load static %}
+                <img
+                   src="{% static 'library/images/bg-books.jpg' %}"
+                   alt="{{ book.title }} book cover"
+                   class="card-img-top"
+                />
+                <div class="card-body">
+                    <p><strong>Author:</strong>
+                        <a href="#">
+                          {{ book.author }}
+                        </a>
+                    </p>
+                    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+                    <p><strong>Language:</strong> {{ book.language }}</p>
+                    <p><strong>Genre:</strong> {{ book.display_genre }}</p>
+                    <p><strong>Summary:</strong></p>
+                    <p class="card-text">
+                      {{ book.summary }}
+                    </p>
+                    <h5>Copies</h5>
+                      {% for copy in book.bookinstance_set.all %}
+                          <hr>
+                          <p class="badge rounded-pill {% if copy.status == 'a' %}bg-success{% elif copy.status == 'm' %}bg-danger{% else %}bg-warning{% endif %}">
+                            {{ copy.get_status_display }}
+                          </p>
+                          {% if copy.status == 'o' %}
+                            <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+                          {% endif %}
+                          <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+                          <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+                      {% endfor %}
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

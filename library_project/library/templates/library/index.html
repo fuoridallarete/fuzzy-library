@@ -1,0 +1,105 @@
+{% extends 'library/base.html' %}
+{% block title %}
+    Local Library
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                <h1>Local Library Home</h1>
+                <p>Welcome to your Local Library, a
+                    <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django">
+                        Django
+                    </a>
+                     website developed by <em>myself</em>, sort of.
+                </p>
+                <p>Following <a href="https://docs.djangoproject.com/en/3.1/">this</a> tutorial.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                {% load static %}
+                <img
+                   src="{% static 'library/images/bg-books.jpg' %}"
+                   alt="{{ book.title }} book cover"
+                   class="card-img-top"
+                />
+              <div class="card-body">
+                <a href="{% url 'books' %}" class="btn btn-primary">Books</a>
+              </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                {% load static %}
+                <img
+                   src="{% static 'library/images/bg-books.jpg' %}"
+                   alt="books card image button"
+                   class="card-img-top"
+                />
+              <div class="card-body">
+                <a href="{% url 'authors' %}" class="btn btn-primary">Authors</a>
+              </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                {% load static %}
+                <img
+                   src="{% static 'library/images/bg-books.jpg' %}"
+                   alt="authors card image button"
+                   class="card-img-top"
+                />
+              <div class="card-body">
+                <a href="#" class="btn btn-primary">Events</a>
+              </div>
+            </div>
+        </div>
+        <div class="col">
+                <div class="card">
+                    {% load static %}
+                    <img
+                       src="{% static 'library/images/bg-books.jpg' %}"
+                       alt="admin card image button"
+                       class="card-img-top"
+                    />
+                  <div class="card-body">
+                    <a href="#" class="btn btn-primary">Login</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block records %}
+    <div class="fixed-bottom text-center mb-2">
+        <p>The library has the following record counts:</p>
+        <ul class="list-group list-group-horizontal justify-content-center">
+          <li class="list-group-item"><strong>Books:</strong>
+              <span class="badge bg-primary rounded-pill">
+                  {{ num_books }}
+              </span>
+          </li>
+          <li class="list-group-item"><strong>Copies:</strong>
+              <span class="badge bg-primary rounded-pill">
+                {{ num_instances }}
+              </span>
+          </li>
+          <li class="list-group-item"><strong>Copies available:</strong>
+              <span class="badge bg-primary rounded-pill">
+                {{ num_instances_available }}
+              </span>
+          </li>
+          <li class="list-group-item"><strong>Authors:</strong>
+              <span class="badge bg-primary rounded-pill">
+                {{ num_authors }}
+              </span>
+          </li>
+        </ul>
+        <p class="mt-2">You have visited this page
+            <span class="badge bg-primary rounded-pill mt-0">{{ num_visits }}</span> time{{ num_visits|pluralize }}.
+        </p>
+    </div>
+{% endblock %}
