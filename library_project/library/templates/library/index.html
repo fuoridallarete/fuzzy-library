@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <div class="text-center my-3">
-                <h1>Local Library Home</h1>
+                <h1 class="mb-0">Local Library Home</h1>
                 <p>Welcome to your Local Library, a
                     <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django">
                         Django
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="col">
-                <div class="card">
+            <div class="card">
                     {% load static %}
                     <img
                        src="{% static 'library/images/bg-books.jpg' %}"
@@ -71,35 +71,33 @@
                   </div>
                 </div>
             </div>
-        </div>
-{% endblock %}
-{% block records %}
-    <div class="fixed-bottom text-center mb-2">
-        <p>The library has the following record counts:</p>
-        <ul class="list-group list-group-horizontal justify-content-center">
-          <li class="list-group-item"><strong>Books:</strong>
-              <span class="badge bg-primary rounded-pill">
-                  {{ num_books }}
-              </span>
-          </li>
-          <li class="list-group-item"><strong>Copies:</strong>
-              <span class="badge bg-primary rounded-pill">
-                {{ num_instances }}
-              </span>
-          </li>
-          <li class="list-group-item"><strong>Copies available:</strong>
-              <span class="badge bg-primary rounded-pill">
-                {{ num_instances_available }}
-              </span>
-          </li>
-          <li class="list-group-item"><strong>Authors:</strong>
-              <span class="badge bg-primary rounded-pill">
-                {{ num_authors }}
-              </span>
-          </li>
-        </ul>
-        <p class="mt-2">You have visited this page
-            <span class="badge bg-primary rounded-pill mt-0">{{ num_visits }}</span> time{{ num_visits|pluralize }}.
-        </p>
+        {% endblock %}
+        {% block footer %}
+            <p class="mb-1">The library has the following record counts:</p>
+              <ul class="list-group list-group-horizontal justify-content-center">
+              <li class="list-group-item"><strong>Books:</strong>
+                  <span class="badge bg-primary rounded-pill">
+                      {{ num_books }}
+                  </span>
+              </li>
+              <li class="list-group-item"><strong>Copies:</strong>
+                  <span class="badge bg-primary rounded-pill">
+                    {{ num_instances }}
+                  </span>
+              </li>
+              <li class="list-group-item"><strong>Copies available:</strong>
+                  <span class="badge bg-primary rounded-pill">
+                    {{ num_instances_available }}
+                  </span>
+              </li>
+              <li class="list-group-item"><strong>Authors:</strong>
+                  <span class="badge bg-primary rounded-pill">
+                    {{ num_authors }}
+                  </span>
+              </li>
+            </ul>
+            <p class="mt-2">You have visited this page
+                <span class="badge bg-primary rounded-pill mt-0">{{ num_visits }}</span> time{{ num_visits|pluralize }}.
+            </p>
+        {% endblock %}
     </div>
-{% endblock %}
