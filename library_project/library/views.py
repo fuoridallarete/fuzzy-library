@@ -1,13 +1,14 @@
-from django.db.models import Count
 from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Book, Author, BookInstance
 
 
 # Create your views here.
 
-
+@login_required
 def index(request):
     num_books = Book.objects.all().count
     num_instances = BookInstance.objects.all().count()
@@ -34,7 +35,10 @@ def index(request):
     return render(request, template, context=context)
 
 
-class BookListView(generic.ListView):
+class BookListView(LoginRequiredMixin, generic.ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
     model: Book
     # add code below to customise, otherwise just above line is enough to make the view work
     # your own name for the list as a template variable
@@ -64,12 +68,18 @@ class BookListView(generic.ListView):
     '''
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
     model = Book
     context_object_name = 'book'
 
 
-class AuthorListView(generic.ListView):
+class AuthorListView(LoginRequiredMixin, generic.ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
     model: Author
     # add code below to customise, otherwise just above line is enough to make the view work
     # your own name for the list as a template variable
@@ -79,6 +89,9 @@ class AuthorListView(generic.ListView):
     queryset = Author.objects.all()
 
 
-class AuthorDetailView(generic.DetailView):
+class AuthorDetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
     model = Author
     context_object_name = 'author'
