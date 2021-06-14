@@ -38,6 +38,13 @@
                           <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
                           <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
                       {% endfor %}
+                      {% if perms.catalog.can_mark_returned %}
+                        <!-- We can mark a BookInstance as returned. -->
+                        <!-- Perhaps add code to link to a "book return" view here. -->
+                        <a href="{% url 'books' %}" class="btn btn-primary">
+                            Book return
+                        </a>
+                      {% endif %}
                   </div>
                 </div>
             </div>

@@ -8,13 +8,18 @@
             <div class="text-center my-3">
                 <h1 class="mb-0">Local Library Home</h1>
                 <p>Welcome to your Local Library, a
-                    <a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django">
+                    <a
+                      href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django"
+                      target="_blank"
+                    >
                         Django
                     </a>
                      website developed by <em>myself</em>, sort of.
                 </p>
-                <p>Following <a href="https://docs.djangoproject.com/en/3.1/">this</a> tutorial.
+                <p>Following
+                    <a href="https://docs.djangoproject.com/en/3.1/" target="_blank">this</a> tutorial.
                 </p>
+                {{ perms.library.can_mark_returned }}
             </div>
         </div>
     </div>

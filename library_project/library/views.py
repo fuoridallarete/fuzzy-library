@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Book, Author, BookInstance
 
@@ -105,3 +105,35 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+
+@login_required
+@permission_required('library.can_mark_returned', raise_exception=True)
+def borrowed_books(request):
+
+    is_available = BookInstance.objects.filter(status='a')
+    num_available = BookInstance.objects.filter(status='a').count()
+
+    is_on_maintenance = BookInstance.objects.filter(status='m')
+    num_on_maintenance = BookInstance.objects.filter(status='m').count()
+
+    is_on_loan = BookInstance.objects.filter(status='o')
+    num_on_loan = BookInstance.objects.filter(status='o').count()
+
+    is_reserved = BookInstance.objects.filter(status='r')
+    num_reserved = BookInstance.objects.filter(status='r').count()
+
+    context = {
+        'is_available': is_available,
+        'num_available': num_available,
+        'is_on_maintenance': is_on_maintenance,
+        'num_on_maintenance': num_on_maintenance,
+        'is_on_loan': is_on_loan,
+        'num_on_loan': num_on_loan,
+        'is_reserved': is_reserved,
+        'num_reserved': num_reserved
+    }
+    template = 'library/borrowed_books.html'
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, template, context=context)
