@@ -7,8 +7,9 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+from .forms import RenewBookModelForm
 from .models import Book, Author, BookInstance
-from .forms import RenewBookForm
+from .forms_one import RenewBookForm
 
 
 # Create your views here.
@@ -183,12 +184,22 @@ def renew_book(request, pk):
     if request.method == 'POST':
 
         # Create a form instance and populate it with data from the request (binding):
-        form = RenewBookForm(request.POST)
+        # if using forms_one.py
+        # form = RenewBookForm(request.POST)
+
+        # if using forms.py
+        form = RenewBookModelForm(request.POST)
+
 
         # Check if the form is valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-            book_instance.due_back = form.cleaned_data['renewal_date']
+            # if using forms_one.py
+            # book_instance.due_back = form.cleaned_data['renewal_date']
+
+            # if using forms.py
+            book_instance.due_back = form.cleaned_data['due_back']
+
             book_instance.save()
 
             # redirect to a new URL:
@@ -197,7 +208,11 @@ def renew_book(request, pk):
     # If this is a GET (or any other method) create the default form.
     else:
         proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
-        form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+        # if using forms_one.py
+        # form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+
+        # if using forms.py
+        form = RenewBookModelForm(initial={'due_back': proposed_renewal_date})
 
     context = {
         'form': form,
