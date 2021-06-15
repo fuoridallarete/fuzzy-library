@@ -17,13 +17,13 @@
                   </div>
                 <div>
                     <a
-                      class="btn btn-primary btn-block" type="submit"
+                      class="btn btn-warning btn-block" type="submit"
                       href="{% url 'author_update' author.id %}"
                     >
                       Edit
                     </a>
                     <a
-                      class="btn btn-primary btn-block" type="submit"
+                      class="btn btn-danger btn-block" type="submit"
                       href="{% url 'author_delete' author.id %}"
                     >
                       Delete
@@ -34,13 +34,15 @@
                 {% if author.date_of_death %}
                     <p><strong>Date of death:</strong> {{ author.date_of_death }}</p>
                 {% endif %}
-                <h5>Books</h5>
-                  {% for book in author.book_set.all %}
+                {% if author.book_set.all %}
+                    <h5>Books</h5>
+                    {% for book in author.book_set.all %}
                       <hr>
                       <p><strong>{{ book.title }}</strong></p>
                       <small><strong>ISBN:</strong>{{ book.isbn }}</small></p>
                       <p>{{ book.summary }}</p>
-                  {% endfor %}
+                    {% endfor %}
+                {% endif %}
               </div>
             </div>
         </div>
