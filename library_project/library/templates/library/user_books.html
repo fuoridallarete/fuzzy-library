@@ -2,8 +2,9 @@
 
 {% block content %}
     <div>
-            <h1 class="mb-5">Books borrowed by {{ user.first_name }} {{ user.last_name}}</h1>
-
+            <h2 class="mb-5">
+                Books borrowed by {{ user.first_name }} {{ user.last_name}}
+            </h2>
             {% if bookinstance_list %}
                 <ul>
                   {% for bookinst in bookinstance_list %}

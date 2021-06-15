@@ -1,7 +1,21 @@
 {% extends 'library/base.html' %}
 
 {% block content %}
-    <h1 class="text-center my-3">Local Library Authors List</h1>
+    <div class="d-flex">
+       <div class="flex-grow-1">
+         <h2 class="my-3">Local Library Authors List</h2>
+       </div>
+       <div>
+           <a
+              class="btn btn-primary btn-block my-3" type="submit"
+              href="{% url 'author_create' %}"
+            >
+              Create New
+            </a>
+       </div>
+    </div>
+
+
     {% if authors_list %}
         <table class="table">
             <thead>

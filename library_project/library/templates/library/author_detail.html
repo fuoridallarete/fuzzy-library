@@ -1,26 +1,48 @@
 {% extends 'library/base.html' %}
 
 {% block content %}
-    <div class="card">
-        {% load static %}
-        <img
-           src="{% static 'library/images/bg-books.jpg' %}"
-           alt="{{ author.name }} photo"
-           class="card-img-top"
-        />
-      <div class="card-body">
-        <h4 class="card-title mb-3">{{ author.last_name }}, {{ author.first_name }}</h4>
-        <p><strong>Date of birth:</strong> {{ author.date_of_birth }}</p>
-        {% if author.date_of_death %}
-            <p><strong>Date of death:</strong> {{ author.date_of_death }}</p>
-        {% endif %}
-        <h5>Books</h5>
-          {% for book in author.book_set.all %}
-              <hr>
-              <p><strong>{{ book.title }}</strong></p>
-              <small><strong>ISBN:</strong>{{ book.isbn }}</small></p>
-              <p>{{ book.summary }}</p>
-          {% endfor %}
-      </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                {% load static %}
+                <img
+                   src="{% static 'library/images/bg-books.jpg' %}"
+                   alt="{{ author.name }} photo"
+                   class="card-img-top"
+                />
+              <div class="card-body">
+                <div class="d-flex">
+                  <div class="flex-grow-1">
+                    <h4 class="card-title mb-3">{{ author.last_name }}, {{ author.first_name }}</h4>
+                  </div>
+                <div>
+                    <a
+                      class="btn btn-primary btn-block" type="submit"
+                      href="{% url 'author_update' author.id %}"
+                    >
+                      Edit
+                    </a>
+                    <a
+                      class="btn btn-primary btn-block" type="submit"
+                      href="{% url 'author_delete' author.id %}"
+                    >
+                      Delete
+                    </a>
+                </div>
+              </div>
+                <p><strong>Date of birth:</strong> {{ author.date_of_birth }}</p>
+                {% if author.date_of_death %}
+                    <p><strong>Date of death:</strong> {{ author.date_of_death }}</p>
+                {% endif %}
+                <h5>Books</h5>
+                  {% for book in author.book_set.all %}
+                      <hr>
+                      <p><strong>{{ book.title }}</strong></p>
+                      <small><strong>ISBN:</strong>{{ book.isbn }}</small></p>
+                      <p>{{ book.summary }}</p>
+                  {% endfor %}
+              </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -2,8 +2,9 @@ import datetime
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -190,7 +191,6 @@ def renew_book(request, pk):
         # if using forms.py
         form = RenewBookModelForm(request.POST)
 
-
         # Check if the form is valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
@@ -220,3 +220,43 @@ def renew_book(request, pk):
     }
 
     return render(request, 'library/book_renew.html', context)
+
+# The "create" and "update" views use the same template by default, which will be named
+# after your model: model_name_form.html (you can change the suffix to something other
+# than _form using the template_name_suffix field in your view, for example
+# template_name_suffix = '_other_suffix')
+
+
+class AuthorCreate(PermissionRequiredMixin, CreateView):
+    permission_required = 'library.can_mark_returned'
+    model = Author
+    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+    # You can also specify initial values for each of the fields using a
+    # dictionary of field_name / value pairs, ex:
+    # initial = {'date_of_death': '11/06/2020'}
+
+
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'library.can_mark_returned'
+    model = Author
+    fields = '__all__'  # Not recommended (potential security issue if more fields added)
+
+
+# By default, these views (create, update, delete) will redirect on success to a page displaying the newly
+    # created/edited model item, which in our case will be the author detail view.
+    # You can specify an alternative redirect location by explicitly declaring parameter success_url,
+    # see AuthorDelete class.
+
+# The "delete" view expects to find a template named with the format
+# model_name_confirm_delete.html (again, you can change the suffix using
+# template_name_suffix in your view).
+
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'library.can_mark_returned'
+    model = Author
+    # The AuthorDelete class doesn't need to display any of the fields, so these don't need to be specified.
+    # You do however need to specify the success_url, because there is no obvious default value for Django to use.
+    # In this case, we use the reverse_lazy() function to redirect to our author list after an author has been deleted
+    # — reverse_lazy() is a lazily executed version of reverse(), used here because we're providing a URL
+    # to a class-based view attribute.
+    success_url = reverse_lazy('authors')

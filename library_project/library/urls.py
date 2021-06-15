@@ -14,4 +14,7 @@ urlpatterns = [
     path('books_on_maintenance/', views.MaintenanceBooksListView.as_view(), name='books_on_maintenance'),
     path('available_books/', views.AvailableBooksListView.as_view(), name='available_books'),
     path('reserved_books/', views.ReservedBooksListView.as_view(), name='reserved_books'),
+    path('author/create/', views.AuthorCreate.as_view(), name='author_create'),
+    path('author/<int:pk>/update/', views.AuthorUpdate.as_view(), name='author_update'),
+    path('author/<int:pk>/delete/', views.AuthorDelete.as_view(), name='author_delete'),
 ]
