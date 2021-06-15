@@ -9,4 +9,5 @@ urlpatterns = [
     path('authors/author_detail/<int:pk>/', views.AuthorDetailView.as_view(), name='author_detail'),
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my_borrowed'),
     path('borrowed_books/', views.borrowed_books, name='borrowed_books'),
+    path('book/<uuid:pk>/renew/', views.renew_book, name='renew_book'),
 ]

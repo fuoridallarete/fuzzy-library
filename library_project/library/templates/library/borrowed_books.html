@@ -60,6 +60,7 @@
                             {{book.book.title}}
                         </a>
                         ({{ book.due_back }})
+                      <a href="{% url 'renew_book' book.id %}">Renew</a>
                       </li>
                   {% endfor %}
               </ul>
