@@ -3,10 +3,13 @@
     <p class="mb-1">You're logged in as:</p>
     <p class="fw-bold">{{ user.get_username }}</p>
     {% if perms.library.can_mark_returned %}
-        <a
-          href="{% url 'library_status' %}"
-          class="text-decoration-none text-reset"
-        >Library status</a>
+        <div class="border-top border-2">
+            <h5 class="mt-3">Staff</h5>
+            <a
+              href="{% url 'library_status' %}"
+              class="text-decoration-none text-reset"
+            >Library status</a>
+        </div>
     {% else %}
         <a
           href="{% url 'my_borrowed' %}"
