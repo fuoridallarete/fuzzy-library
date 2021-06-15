@@ -1,23 +1,17 @@
 <div class="p-3 mt-5 border-top border-bottom border-2">
+    <p>Hi, {{ user.first_name }} {{ user.last_name }}</p>
     <p class="mb-1">You're logged in as:</p>
     <p class="fw-bold">{{ user.get_username }}</p>
-    <ul class="nav">
-      <li class="nav-item">
-          {{ user.first_name }} {{ user.last_name }}
-      </li>
-      <li class="nav-item mt-3">
-            {% if perms.library.can_mark_returned %}
-                <a
-                  href="{% url 'borrowed_books' %}"
-                  class="text-decoration-none text-reset"
-                >Books on loan</a>
-            {% else %}
-                <a
-                  href="{% url 'my_borrowed' %}"
-                  class="text-decoration-none text-reset"
-                >My books on loan</a>
-            {% endif %}
-      </li>
-    </ul>
+    {% if perms.library.can_mark_returned %}
+        <a
+          href="{% url 'library_status' %}"
+          class="text-decoration-none text-reset"
+        >Library status</a>
+    {% else %}
+        <a
+          href="{% url 'my_borrowed' %}"
+          class="text-decoration-none text-reset"
+        >My books on loan</a>
+    {% endif %}
 </div>
 

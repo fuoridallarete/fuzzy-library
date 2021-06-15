@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Book, Author, BookInstance
 from .forms import RenewBookForm
@@ -114,34 +114,66 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
 @login_required
 @permission_required('library.can_mark_returned', raise_exception=True)
-def borrowed_books(request):
-
-    is_available = BookInstance.objects.filter(status='a')
+def library_status(request):
     num_available = BookInstance.objects.filter(status='a').count()
-
-    is_on_maintenance = BookInstance.objects.filter(status='m')
     num_on_maintenance = BookInstance.objects.filter(status='m').count()
-
-    is_on_loan = BookInstance.objects.filter(status='o')
     num_on_loan = BookInstance.objects.filter(status='o').count()
-
-    is_reserved = BookInstance.objects.filter(status='r')
     num_reserved = BookInstance.objects.filter(status='r').count()
 
     context = {
-        'is_available': is_available,
         'num_available': num_available,
-        'is_on_maintenance': is_on_maintenance,
         'num_on_maintenance': num_on_maintenance,
-        'is_on_loan': is_on_loan,
         'num_on_loan': num_on_loan,
-        'is_reserved': is_reserved,
         'num_reserved': num_reserved
     }
-    template = 'library/borrowed_books.html'
+    template = 'library/library_status.html'
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, template, context=context)
+
+
+class LoanedBooksListView(PermissionRequiredMixin, LoginRequiredMixin, generic.ListView):
+    permission_required = 'library.can_mark_returned'
+    model: BookInstance
+    context_object_name = 'on_loan_books_list'
+
+    # Get 5 books containing the title war
+    queryset = BookInstance.objects.filter(status__exact='o').order_by('due_back')
+    template_name = 'library/books_on_loan.html'
+    paginate_by = 10
+
+
+class AvailableBooksListView(PermissionRequiredMixin, LoginRequiredMixin, generic.ListView):
+    permission_required = 'library.can_mark_returned'
+    model: BookInstance
+    context_object_name = 'available_books_list'
+
+    # Get 5 books containing the title war
+    queryset = BookInstance.objects.filter(status__exact='a').order_by('due_back')
+    template_name = 'library/books_available.html'
+    paginate_by = 10
+
+
+class MaintenanceBooksListView(PermissionRequiredMixin, LoginRequiredMixin, generic.ListView):
+    permission_required = 'library.can_mark_returned'
+    model: BookInstance
+    context_object_name = 'maintenance_books_list'
+
+    # Get 5 books containing the title war
+    queryset = BookInstance.objects.filter(status__exact='m').order_by('due_back')
+    template_name = 'library/books_on_maintenance.html'
+    paginate_by = 10
+
+
+class ReservedBooksListView(PermissionRequiredMixin, LoginRequiredMixin, generic.ListView):
+    permission_required = 'library.can_mark_returned'
+    model: BookInstance
+    context_object_name = 'reserved_books_list'
+
+    # Get 5 books containing the title war
+    queryset = BookInstance.objects.filter(status__exact='r').order_by('due_back')
+    template_name = 'library/reserved_books.html'
+    paginate_by = 10
 
 
 def renew_book(request, pk):

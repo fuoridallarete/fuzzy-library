@@ -1,0 +1,35 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-5">Books on maintenance</h1>
+            {% if maintenance_books_list %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Language</th>
+                            <th scope="col">Reserved by</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in maintenance_books_list %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ book.book.title }}</td>
+                            <td>{{ book.language }}</td>
+                            <td>WIP</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm">Make available</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

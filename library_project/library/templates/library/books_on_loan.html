@@ -1,0 +1,37 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-5">Borrowed books</h1>
+            {% if on_loan_books_list %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Language</th>
+                            <th scope="col">Borrower</th>
+                            <th scope="col">Due back</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in on_loan_books_list %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ book.book.title }}</td>
+                            <td>{{ book.language }}</td>
+                            <td>{{ book.borrower }}</td>
+                            <td>{{ book.due_back }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm">Return book</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

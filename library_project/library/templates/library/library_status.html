@@ -1,0 +1,105 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-5">Library status</h1>
+        </div>
+    </div>
+
+    {% comment %} AVAILABLE {% endcomment %}
+    <div class="row">
+        <div
+            class="col-4 border-bottom border-info border-2"
+            style="margin-left: 1rem; padding-left: 0;"
+        >
+            <div class="d-flex">
+              <div class="pt-2 flex-grow-1 bd-highlight">
+                  <p>
+                    <strong>Books available for loan:</strong>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ num_available }}
+                    </span>
+                </p>
+              </div>
+              <div class="p-2 bd-highlight">
+                  {% if num_available > 0 %}
+                    <a href="{% url 'available_books' %}" class="btn btn-primary">See</a>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} BORROWED {% endcomment %}
+    <div class="row">
+        <div
+            class="col-4 border-bottom border-info border-2"
+            style="margin-left: 1rem; padding-left: 0;"
+        >
+            <div class="d-flex">
+              <div class="pt-2 flex-grow-1 bd-highlight">
+                  <p>
+                    <strong>Borrowed books:</strong>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ num_on_loan }}
+                    </span>
+                </p>
+              </div>
+              <div class="p-2 bd-highlight">
+                  {% if num_on_loan > 0 %}
+                    <a href="{% url 'books_on_loan' %}" class="btn btn-primary">See</a>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} RESERVED {% endcomment %}
+    <div class="row">
+        <div
+            class="col-4 border-bottom border-info border-2"
+            style="margin-left: 1rem; padding-left: 0;"
+        >
+            <div class="d-flex">
+              <div class="pt-2 flex-grow-1 bd-highlight">
+                  <p>
+                    <strong>Reserved books:</strong>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ num_reserved }}
+                    </span>
+                  </p>
+              </div>
+              <div class="p-2 bd-highlight">
+                  {% if num_reserved > 0 %}
+                    <a href="{% url 'reserved_books' %}" class="btn btn-primary">See</a>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} MAINTENANCE {% endcomment %}
+    <div class="row">
+        <div
+            class="col-4 border-bottom border-info border-2"
+            style="margin-left: 1rem; padding-left: 0;"
+        >
+            <div class="d-flex">
+              <div class="pt-2 flex-grow-1 bd-highlight">
+                  <p>
+                    <strong>Books on maintenance:</strong>
+                    <span class="badge bg-primary rounded-pill">
+                        {{ num_on_maintenance }}
+                    </span>
+                </p>
+              </div>
+              <div class="p-2 bd-highlight">
+                  {% if num_on_maintenance > 0 %}
+                    <a href="{% url 'books_on_maintenance' %}" class="btn btn-primary">See</a>
+                  {% endif %}
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

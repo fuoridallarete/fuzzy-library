@@ -1,0 +1,33 @@
+{% extends 'library/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-8">
+            <h1 class="mb-5">Books available</h1>
+            {% if available_books_list %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Language</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in available_books_list %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ book.book.title }}</td>
+                            <td>{{ book.language }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm">Borrow</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
