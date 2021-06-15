@@ -25,7 +25,12 @@
                             <td>{{ book.borrower }}</td>
                             <td>{{ book.due_back }}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm">Return book</button>
+                                <a
+                                  href="{% url 'renew_book' book.id %}"
+                                  class="btn btn-primary btn-sm"
+                                >
+                                    Renew
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
